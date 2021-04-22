@@ -5,7 +5,7 @@ import AddElement from './AddElement';
 class DisplayList extends React.Component{
     render(){
         return(<div>{this.props.newList.map( action =>{
-            return(<div key={action.id}> <Link to={`/${action.id}`}>{action.action}</Link></div>)
+            return(<div key={action.id}> <Link to={`/${action.id}`}>{action.element}</Link></div>)
         })} 
         <AddElement />
         </div>)}

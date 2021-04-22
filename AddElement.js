@@ -1,37 +1,39 @@
 import React from 'react'
+import { connect } from 'react-redux';
 
 class AddElement extends React.Component{
- state={ element:'', date:''}
-
- myChangeHandler = (event)=>{
-
-let el = event.target.name;
-let value = event.target.value;
-this.setState({[el] : value})
-
-}
-
-
-
+  state = {element:'' , schedule:'' , finalElement:'' , finalSchedule:'' }
+  
 handleSubmit = (event)=>{
-event.preventDefault();
+    event.preventDefault();
+    const data = this.state;
+    this.props.addAction(data.element , data.schedule);
+    //this.setState({finalElement:data.element , finalSchedule:data.schedule})
 }
 
+handleChange = (event)=>{
+    this.setState({[event.target.name]:event.target.value , [event.target.name]:event.target.value})
+}
 
 render(){
-    console.log(this.state.date);
+  
     return(
-        <div>
-            <form onSubmit={this.handleSubmit}>
-                <input type="text" placeholder="enter element" name="element" onChange = {this.myChangeHandler} />
-                <input type="text" placeholder="enter your date" name="date" onChange = {this.myChangeHandler} />
-                <input type="submit" value="add element"/>
-            </form>
-            </div>
+      <div>
+          <form onSubmit={this.handleSubmit}> 
+          <input type="text" name="element" onChange={this.handleChange} placeholder="Enter Text"/>
+          <input type="text" name="schedule" onChange={this.handleChange} placeholder="Enter Text"/>
+          <button type="submit">Submit</button>
+          </form>
+        </div>
     )
 }
-
-
 }
 
-export default AddElement;
+const setNewElementProps = (dispatch) =>{
+
+return{ addAction: (element , date) => { dispatch({type:'ADD_ITEM' , element:element , date:date })
+}//end of the addAction
+}//end of the return
+}//end of the function setNewElementProps
+
+export default connect(null, setNewElementProps)(AddElement);
